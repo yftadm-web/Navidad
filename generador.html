@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Tarjetas Navideñas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #c41e3a;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #2d5016;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .lista-amigos {
+            margin-top: 20px;
+        }
+
+        .amigo-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #c41e3a;
+        }
+
+        .amigo-form {
+            display: grid;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #c41e3a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #a01729;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.4);
+        }
+
+        .btn-secondary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5568d3;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-whatsapp:hover {
+            background: #20bd5a;
+        }
+
+        .btn-copy {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-copy:hover {
+            background: #5a6268;
+        }
+
+        .resultado {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .link-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #25D366;
+        }
+
+        .link-item h3 {
+            color: #2d5016;
+            margin-bottom: 10px;
+        }
+
+        .link-url {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+
+        .instrucciones {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 25px;
+        }
+
+        .instrucciones h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .instrucciones ol {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .instrucciones li {
+            margin-bottom: 8px;
+        }
+
+        .config-url {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .config-url label {
+            color: #1976D2;
+        }
+
+        .config-url small {
+            color: #666;
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎄 Generador de Tarjetas Navideñas 🎄</h1>
+        <p class="subtitle">Crea tarjetas personalizadas para todos tus amigos</p>
+
+        <div class="instrucciones">
+            <h3>📝 Instrucciones:</h3>
+            <ol>
+                <li>Configura tu URL base (el dominio donde subiste la tarjeta)</li>
+                <li>Escribe tu nombre y mensaje general</li>
+                <li>Agrega los nombres y teléfonos de tus amigos</li>
+                <li>Haz clic en "Generar Enlaces"</li>
+                <li>¡Envía directamente por WhatsApp con un clic!</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>⚙️ Configuración</h2>
+            <div class="config-url">
+                <label>URL Base de tu Tarjeta:</label>
+                <input type="text" id="urlBase" placeholder="https://tu-usuario.github.io/tarjetas-navidad/index.html" value="https://tu-usuario.github.io/tarjetas-navidad/index.html">
+                <small>Esta es la URL donde subiste el archivo index.html</small>
+            </div>
+
+            <label>Tu Nombre (De:):</label>
+            <input type="text" id="tuNombre" placeholder="Juan Pérez">
+
+            <label>Mensaje General (puedes personalizarlo para cada amigo después):</label>
+            <textarea id="mensajeGeneral" placeholder="¡Feliz Navidad! Que esta temporada esté llena de amor, paz y alegría para ti y tu familia. ¡Feliz 2025!">¡Feliz Navidad! Que esta temporada esté llena de amor, paz y alegría para ti y tu familia. ¡Feliz 2025!</textarea>
+        </div>
+
+        <div class="section">
+            <h2>👥 Lista de Amigos</h2>
+            
+            <div id="listaAmigos" class="lista-amigos">
+                <div class="amigo-item">
+                    <div class="amigo-form">
+                        <label>Nombre:</label>
+                        <input type="text" class="nombre-amigo" placeholder="María García">
+                        
+                        <label>Teléfono (con código de país, ej: 51987654321):</label>
+                        <input type="text" class="telefono-amigo" placeholder="51987654321">
+                        
+                        <label>Mensaje personalizado (opcional, deja vacío para usar el general):</label>
+                        <textarea class="mensaje-amigo" placeholder="Mensaje especial para esta persona..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="agregarAmigo()">➕ Agregar Otro Amigo</button>
+        </div>
+
+        <button class="btn btn-primary" onclick="generarEnlaces()" style="width: 100%; font-size: 1.2em;">
+            🎁 Generar Enlaces
+        </button>
+
+        <div id="resultado" class="resultado">
+            <h2>✅ ¡Enlaces Generados!</h2>
+            <div id="enlaces"></div>
+        </div>
+    </div>
+
+    <script>
+        function agregarAmigo() {
+            const lista = document.getElementById('listaAmigos');
+            const div = document.createElement('div');
+            div.className = 'amigo-item';
+            div.innerHTML = `
+                <div class="amigo-form">
+                    <label>Nombre:</label>
+                    <input type="text" class="nombre-amigo" placeholder="Nombre del amigo">
+                    
+                    <label>Teléfono (con código de país):</label>
+                    <input type="text" class="telefono-amigo" placeholder="51987654321">
+                    
+                    <label>Mensaje personalizado (opcional):</label>
+                    <textarea class="mensaje-amigo" placeholder="Mensaje especial..."></textarea>
+                </div>
+            `;
+            lista.appendChild(div);
+        }
+
+        function generarEnlaces() {
+            const urlBase = document.getElementById('urlBase').value.trim();
+            const tuNombre = document.getElementById('tuNombre').value.trim();
+            const mensajeGeneral = document.getElementById('mensajeGeneral').value.trim();
+
+            if (!urlBase || !tuNombre) {
+                alert('⚠️ Por favor completa la URL base y tu nombre');
+                return;
+            }
+
+            const amigos = document.querySelectorAll('.amigo-item');
+            let html = '';
+
+            amigos.forEach((item, index) => {
+                const nombre = item.querySelector('.nombre-amigo').value.trim();
+                const telefono = item.querySelector('.telefono-amigo').value.trim();
+                const mensajePersonal = item.querySelector('.mensaje-amigo').value.trim();
+
+                if (nombre && telefono) {
+                    const mensaje = mensajePersonal || mensajeGeneral;
+                    
+                    const url = `${urlBase}?para=${encodeURIComponent(nombre)}&de=${encodeURIComponent(tuNombre)}&msg=${encodeURIComponent(mensaje)}`;
+                    
+                    const textoWhatsApp = `🎄 ¡Hola ${nombre}! 🎄\n\nTengo una tarjeta navideña especial para ti:\n${url}\n\n¡Ábrela para ver tu sorpresa! 🎁`;
+                    
+                    const whatsappUrl = `https://wa.me/${telefono}?text=${encodeURIComponent(textoWhatsApp)}`;
+
+                    html += `
+                        <div class="link-item">
+                            <h3>Para: ${nombre}</h3>
+                            <div class="link-url">${url}</div>
+                            <a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp">
+                                📱 Enviar por WhatsApp
+                            </a>
+                            <button class="btn btn-copy" onclick="copiarLink('${url.replace(/'/g, "\\'")}')">
+                                📋 Copiar Link
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+
+            if (html) {
+                document.getElementById('enlaces').innerHTML = html;
+                document.getElementById('resultado').style.display = 'block';
+                document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('⚠️ Agrega al menos un amigo con nombre y teléfono');
+            }
+        }
+
+        function copiarLink(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                alert('✅ Link copiado al portapapeles');
+            }).catch(() => {
+                prompt('Copia este link:', url);
+            });
+        }
+
+        for (let i = 0; i < 2; i++) {
+            agregarAmigo();
+        }
+    </script>
+</body>
+</html>
